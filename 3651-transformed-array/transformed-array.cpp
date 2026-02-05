@@ -5,7 +5,9 @@ public:
         vector<int> result(n);
 
         for(int i=0; i<n ; i++){
-            result[i] = nums[((i + nums[i]) % n + n) % n];
+            if(nums[i] == 0) result[i] = nums[i];
+            else if(nums[i]>0) result[i] = nums[(i+nums[i])%n];
+            else result[i] = nums[(i-abs(nums[i])%n+n)%n];
         }
 
         return result;
