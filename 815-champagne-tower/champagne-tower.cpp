@@ -13,9 +13,10 @@ public:
             for(int j=0 ; j<=i ; j++){
                 if(glasses[i][j] > 1.0){
                     double divided = (glasses[i][j] - 1) / 2;
+                    glasses[i][j] = 1.0;
                     glasses[i+1][j] += divided;
                     glasses[i+1][j+1] += divided;
-                    glasses[i][j] = 1.0;
+                    
                 }
             }
         }
