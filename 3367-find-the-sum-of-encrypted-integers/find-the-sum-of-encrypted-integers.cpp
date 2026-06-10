@@ -8,8 +8,7 @@ public:
 
         while(n>0){
             len++;
-            int ls = n%10;
-            maxi = max(maxi, ls);
+            maxi = max(maxi, n%10);
             n = n/10;
         }
 
