@@ -2,15 +2,38 @@ class Solution {
 public:
     vector<int> majorityElement(vector<int>& nums) {
         vector<int> ans;
-        unordered_map<int, int> mpp;
+        int ele1, ele2;
+        int cnt1 = 0, cnt2 =0;
         int n = nums.size();
-        for(int i=0 ; i<n ; i++){
-            mpp[nums[i]]++;
+
+        //track two candidates
+        for(int num : nums){
+            if(ele1 == num) cnt1++;
+            else if(ele2 == num) cnt2++;
+            else if(cnt1 == 0){
+                ele1 = num;
+                cnt1 = 1;
+            }
+            else if(cnt2 == 0){
+                ele2 = num;
+                cnt2 = 1;
+            }
+            else{
+                cnt1--;
+                cnt2--;
+            }
         }
 
-        for(auto [it1, it2] : mpp){
-            if(it2 > n/3) ans.push_back(it1);
+        // verification
+        int count1=0, count2 = 0;
+        for(int num : nums){
+            if(num == ele1) count1++;
+            else if(num == ele2) count2++;
         }
+
+        if(count1 > n/3) ans.push_back(ele1);
+        if(count2 > n/3) ans.push_back(ele2);
         return ans;
+
     }
 };
