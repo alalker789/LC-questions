@@ -11,10 +11,9 @@ public:
         return true;
     }
     string firstPalindrome(vector<string>& words) {
-        int n = words.size();
 
-        for(int i=0 ; i<n ; i++){
-            if(solve(words[i])) return words[i];
+        for(string str : words){
+            if(solve(str)) return str;
         }
         return "";
     }
