@@ -1,17 +1,20 @@
 class Solution {
 public:
     int maxIceCream(vector<int>& costs, int coins) {
-        sort(costs.begin(), costs.end());
-        int n = costs.size();
-        int ans = 0;
+        int maxPrice = *max_element(costs.begin() , costs.end());
+        vector<int> iceCream(maxPrice+1, 0);
         int money = coins;
-
-        for(int i=0 ; i<n ; i++){
-            if(costs[i]<=money){
+        for(int price : costs){
+            iceCream[price]++;
+        }
+        int ans = 0;
+        for(int price=1 ; price<=maxPrice ; price++){
+            //exhaust small price icecream first
+            while(iceCream[price]>0 && money>=price){
                 ans++;
-                money -= costs[i];
+                money -= price;
+                iceCream[price]--;
             }
-            else break;
         }
         return ans;
     }
