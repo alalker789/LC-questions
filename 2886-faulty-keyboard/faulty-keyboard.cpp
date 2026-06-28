@@ -3,12 +3,12 @@ public:
     string finalString(string s) {
         string ans;
 
-        for(int i=0 ; i<s.size() ; i++){
-            if(s[i]=='i'){
+        for(char ch : s){
+            if(ch=='i'){
                 reverse(ans.begin(), ans.end());
                 continue;
             }
-            ans += s[i];
+            ans += ch;
         }
         return ans;
     }
