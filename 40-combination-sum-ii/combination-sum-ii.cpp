@@ -1,27 +1,25 @@
 class Solution {
 public:
-    void findCombi(int idx, int target, vector<int>& candidates, vector<vector<int>>& ans, vector<int>& temp){
+    void solve(int idx, vector<int>& candidates, int target, vector<int>& temp, vector<vector<int>>& ans){
         if(target == 0){
             ans.push_back(temp);
             return;
         }
 
-        for(int i=idx; i<candidates.size() ; i++){
-            if(candidates[i] > target) break;
-            if(i>idx && candidates[i] == candidates[i-1]) continue;
-
+        for(int i = idx ; i<candidates.size() ; i++){
+            if(i>idx && candidates[i]==candidates[i-1]) continue;
+            if(candidates[i]>target) break;
             temp.push_back(candidates[i]);
-            findCombi(i+1, target - candidates[i], candidates, ans, temp);
+            solve(i+1, candidates, target-candidates[i], temp, ans);
             temp.pop_back();
         }
-    }
 
+    }
     vector<vector<int>> combinationSum2(vector<int>& candidates, int target) {
         sort(candidates.begin(), candidates.end());
         vector<vector<int>> ans;
         vector<int> temp;
-
-        findCombi(0, target, candidates, ans, temp);
+        solve(0, candidates, target, temp, ans);
         return ans;
     }
 };
