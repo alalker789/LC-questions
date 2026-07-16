@@ -1,11 +1,11 @@
 class Solution {
 public:
     long long gcdSum(vector<int>& nums) {
-        int maxi = nums[0];
+        int maxi =  INT_MIN;
         vector<int> prefixGcd;
-        prefixGcd.push_back(nums[0]);
+        // prefixGcd.push_back(nums[0]);
 
-        for(int i=1 ; i<nums.size() ; i++){
+        for(int i=0 ; i<nums.size() ; i++){
             maxi = max(maxi, nums[i]);
             prefixGcd.push_back(gcd(maxi, nums[i]));
         }
