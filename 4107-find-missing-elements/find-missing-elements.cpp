@@ -1,24 +1,14 @@
 class Solution {
 public:
     vector<int> findMissingElements(vector<int>& nums) {
-        map<int, int> mpp;
+        sort(nums.begin(), nums.end());
+        int start = nums[0];
+        int end = nums.back();
         vector<int> ans;
-        
-        int b = *max_element(nums.begin(), nums.end());
-        int a = *min_element(nums.begin(), nums.end());
-        
-        for(int i=a ; i<=b ; i++){
-            mpp[i] = 0;
+        set<int> st(nums.begin(), nums.end());
+        for(int i=start+1 ; i<end ; i++){
+            if(st.count(i)==0) ans.push_back(i);
         }
-        for(int i=0 ; i<nums.size() ; i++){
-            mpp[nums[i]]++;
-        }
-        for(auto it : mpp){
-            if(it.second == 0){
-                ans.push_back(it.first);
-            }
-        }
-        // sort(ans.begin(), ans.end());
         return ans;
     }
 };
