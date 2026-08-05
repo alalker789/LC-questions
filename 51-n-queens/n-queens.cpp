@@ -23,11 +23,11 @@ public:
     }
     vector<vector<string>> solveNQueens(int n) {
         vector<vector<string>> ans;
-        vector<string> board(n, "");
+        vector<string> board;
         string s(n, '.');
 
-        for(int i=0 ; i<n ; i++){
-            board[i] = s;
+        for(int i = 0; i < n; i++) {
+            board.push_back(s);
         }
 
         vector<int> leftRow(n, 0);
