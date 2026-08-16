@@ -13,21 +13,19 @@ class Solution {
 public:
     vector<vector<int>> verticalTraversal(TreeNode* root) {
         map<int, map<int, multiset<int>>> nodes;
-        queue<pair<TreeNode*, pair<int, int>>> todo;
-        todo.push({root, {0,0}});
+        queue<pair<TreeNode*, pair<int,int>>> q;
+        q.push({root, {0,0}});
 
-        while(!todo.empty()){
-            auto p = todo.front();
-            todo.pop();
-
+        while(!q.empty()){
+            auto p = q.front();
+            q.pop();
             TreeNode* node = p.first;
             int vertical = p.second.first, level = p.second.second;
+
             nodes[vertical][level].insert(node->val);
-
-            if(node->left) todo.push({node->left, {vertical-1, level+1}});
-            if(node->right) todo.push({node->right, {vertical+1, level+1}});
+            if(node->left) q.push({node->left, {vertical-1, level+1}});
+            if(node->right) q.push({node->right, {vertical+1, level+1}});
         }
-
         vector<vector<int>> ans;
         for(auto p : nodes){
             vector<int> col;
