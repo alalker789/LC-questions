@@ -2,17 +2,17 @@ class Solution {
 public:
     int largestInteger(vector<int>& nums, int k) {
         int n = nums.size();
-
-        unordered_map<int, int> mpp;
+        vector<int> freq(51, 0);
+    
         for (int num : nums) {
-            mpp[num]++;
+            freq[num]++;
         }
 
         if (k == 1) {
             int ans = -1;
-            for (auto it : mpp) {
-                if (it.second == 1) {
-                    ans = max(ans, it.first);
+            for (int i=0 ; i<51 ; i++) {
+                if (freq[i] == 1) {
+                    ans = max(ans, i);
                 }
             }
             return ans;
@@ -23,13 +23,13 @@ public:
         }
 
         // 1 < k < n
-        if (mpp[nums[0]] == 1 && mpp[nums[n - 1]] == 1)
+        if (freq[nums[0]] == 1 && freq[nums[n - 1]] == 1)
             return max(nums[0], nums[n - 1]);
 
-        if (mpp[nums[0]] > 1 && mpp[nums[n - 1]] == 1)
+        if (freq[nums[0]] > 1 && freq[nums[n - 1]] == 1)
             return nums[n - 1];
 
-        if (mpp[nums[n - 1]] > 1 && mpp[nums[0]] == 1)
+        if (freq[nums[n - 1]] > 1 && freq[nums[0]] == 1)
             return nums[0];
 
         return -1;
