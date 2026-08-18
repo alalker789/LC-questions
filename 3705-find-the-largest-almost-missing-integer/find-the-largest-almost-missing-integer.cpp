@@ -3,7 +3,7 @@ public:
     int largestInteger(vector<int>& nums, int k) {
         int n = nums.size();
 
-        map<int, int> mpp;
+        unordered_map<int, int> mpp;
         for (int num : nums) {
             mpp[num]++;
         }
