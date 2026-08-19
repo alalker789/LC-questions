@@ -13,24 +13,26 @@ class Solution {
 public:
     int widthOfBinaryTree(TreeNode* root) {
         if(!root) return 0;
-        int ans = 1;
         queue<pair<TreeNode*, long long>> q;
         q.push({root, 0});
+        int maxWid = 0;
 
         while(!q.empty()){
             int n = q.size();
-            long long start = q.front().second;
-            long long end = q.back().second;
-            ans = max(ans, (int)(end-start+1));
+            long long mini = q.front().second;
+            long long start = 0, end = 0;
             for(int i=0 ; i<n ; i++){
-                auto p = q.front();
+                TreeNode* node = q.front().first;
+                long long idx = q.front().second - mini;
                 q.pop();
-                TreeNode* node = p.first;
-                long long idx = p.second - start;
-                if(node->left) q.push({node->left, idx*2 + 1});
-                if(node->right) q.push({node->right, idx*2 + 2});
+                if(i==0) start = idx;
+                if(i==n-1) end = idx;
+
+                if(node->left) q.push({node->left, 2*idx + 1});
+                if(node->right) q.push({node->right, 2*idx + 2});
             }
+            maxWid = max(maxWid, (int)(end-start+1));
         }
-        return ans;
+        return maxWid;
     }
 };
