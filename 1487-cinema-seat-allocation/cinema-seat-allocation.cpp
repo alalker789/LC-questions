@@ -1,16 +1,16 @@
 class Solution {
 public:
     int maxNumberOfFamilies(int n, vector<vector<int>>& reservedSeats) {
-        map<int, set<int>> mpp;
-        for(auto seats : reservedSeats){
-            mpp[seats[0]].insert(seats[1]);
+        unordered_map<int, set<int>> mpp;
+        for(auto seat : reservedSeats){
+            mpp[seat[0]].insert(seat[1]);
         }
-        int ans = (n-mpp.size())*2;
+        int ans = (n-mpp.size())*2; // take care if any row is already empty
 
         for(auto it : mpp){
             auto s = it.second;
-            bool left = true;  //2,3,4,5
-            bool mid = true;   //4,5,6,7
+            bool left = true;  // 2,3,4,5
+            bool mid = true;   // 4,5,6,7
             bool right = true; //6,7,8,9
 
             for(int seat : s){
