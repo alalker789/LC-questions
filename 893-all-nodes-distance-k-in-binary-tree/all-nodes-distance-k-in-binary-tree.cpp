@@ -9,7 +9,7 @@
  */
 class Solution {
 public:
-    void markParent(TreeNode* root, unordered_map<TreeNode*, TreeNode*>& parent_track, TreeNode* target){
+    void markParent(TreeNode* root, unordered_map<TreeNode*, TreeNode*>& parentMark){
         queue<TreeNode*> q;
         q.push(root);
         while(!q.empty()){
@@ -17,25 +17,25 @@ public:
             q.pop();
 
             if(node->left){
-                parent_track[node->left] = node;
+                parentMark[node->left] = node;
                 q.push(node->left);
             }
-
             if(node->right){
-                parent_track[node->right] = node;
+                parentMark[node->right] = node;
                 q.push(node->right);
             }
         }
     }
     vector<int> distanceK(TreeNode* root, TreeNode* target, int k) {
-        unordered_map<TreeNode*, TreeNode*> parent_track;
-        markParent(root, parent_track, target);
+        unordered_map<TreeNode*, TreeNode*> parentMark;
+        markParent(root, parentMark);
 
-        unordered_map<TreeNode*, bool> visited;
         queue<TreeNode*> q;
+        unordered_map<TreeNode*, bool> visited;
         q.push(target);
         visited[target] = true;
         int currLevel = 0;
+
         while(!q.empty()){
             int size = q.size();
             if(currLevel++ == k) break;
@@ -45,26 +45,25 @@ public:
                 q.pop();
 
                 if(node->left && !visited[node->left]){
-                    q.push(node->left);
                     visited[node->left] = true;
+                    q.push(node->left);
                 }
                 if(node->right && !visited[node->right]){
-                    q.push(node->right);
                     visited[node->right] = true;
+                    q.push(node->right);
                 }
-                if(parent_track[node] && !visited[parent_track[node]]){
-                    q.push(parent_track[node]);
-                    visited[parent_track[node]] = true;
+                if(parentMark[node] && !visited[parentMark[node]]){
+                    visited[parentMark[node]] = true;
+                    q.push(parentMark[node]);
                 }
             }
         }
+
         vector<int> ans;
         while(!q.empty()){
-            TreeNode* node = q.front();
+            ans.push_back(q.front()->val);
             q.pop();
-            ans.push_back(node->val);
         }
         return ans;
-
     }
 };
