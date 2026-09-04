@@ -1,42 +1,33 @@
-// this is for directed graph
 class Solution {
 public:
-    bool dfs(int node, vector<vector<int>>& Adj, vector<int>& vis, vector<int>& pathVis){
-        vis[node] = 1;
-        pathVis[node] = 1;
-
-        for(auto it : Adj[node]){
-            if(!vis[it]){
-                if(dfs(it, Adj, vis, pathVis)==true){
-                    return true;
-                }
-            }
-            else if(pathVis[it] == 1){
-                return true;
-            }
-        }
-        pathVis[node] = 0;
-        return false;
-    }
     bool canFinish(int numCourses, vector<vector<int>>& prerequisites) {
-        vector<vector<int>> Adj(numCourses);
-        vector<int> vis(numCourses, 0);
-        vector<int> pathVis(numCourses, 0);
-
-        for(auto it : prerequisites){
-            int a = it[0];
-            int b = it[1];
-
-            Adj[b].push_back(a);
+        vector<vector<int>> adjL(numCourses);
+        vector<int> indegree(numCourses, 0);
+        for(auto e : prerequisites){
+            int u = e[0];
+            int v = e[1];
+            indegree[v]++;
+            adjL[u].push_back(v);
         }
-
+        
+        queue<int> q;
         for(int i=0 ; i<numCourses ; i++){
-            if(!vis[i]){
-                if(dfs(i, Adj, vis, pathVis)==true){
-                    return false;
-                }
+            if(indegree[i] == 0) q.push(i);
+        }
+        
+        int cntTopo = 0;
+        while(!q.empty()){
+            int node = q.front();
+            q.pop();
+            cntTopo++;
+            
+            for(auto it : adjL[node]){
+                indegree[it]--;
+                if(indegree[it]==0) q.push(it);
             }
         }
-        return true;
+        
+        if(cntTopo == numCourses) return true;
+        return false;
     }
 };
