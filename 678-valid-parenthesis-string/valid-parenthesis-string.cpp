@@ -1,7 +1,5 @@
 class Solution {
 public:
-    
-
     bool checkValidString(string s) {
         int low = 0, high = 0;
 
