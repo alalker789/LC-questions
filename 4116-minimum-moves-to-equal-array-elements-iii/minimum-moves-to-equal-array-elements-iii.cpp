@@ -4,7 +4,7 @@ public:
         int cnt = 0;
         int maxi = *max_element(nums.begin(), nums.end());
         for(int i=0 ; i<nums.size() ; i++){
-            cnt += (maxi-nums[i]);
+            if(nums[i] < maxi) cnt += (maxi-nums[i]);
         }
         return cnt;    
     }
